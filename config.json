@@ -1,0 +1,8 @@
+{
+  "idle_sleep_seconds": 300,
+  "movement_enabled": true,
+  "movement_speed": 3,
+  "subtitle_typewriter_ms": 28,
+  "show_subtitles_on_start": true,
+  "proactive_enabled": false
+}
