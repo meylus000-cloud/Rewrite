@@ -1,8 +1,11 @@
+
 name: Build Windows EXE
 
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
 
@@ -15,23 +18,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt pyinstaller
+
       - name: Build executable
         run: |
           pyinstaller --noconfirm --clean --windowed --name SonicRewrite --add-data "assets;assets" main.py
-      - name: Include configuration and character prompt
+
+      - name: Include configuration
         shell: pwsh
         run: |
           Copy-Item config.json dist/SonicRewrite/
           Copy-Item Rewrite.safri dist/SonicRewrite/
           Copy-Item README.md dist/SonicRewrite/
+          Copy-Item README.txt dist/SonicRewrite/
+
       - name: Upload build
         uses: actions/upload-artifact@v4
         with:
